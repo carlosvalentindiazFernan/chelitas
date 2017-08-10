@@ -1,5 +1,6 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
-<link rel="import" href="../chelitas-signin/chelitas-signin.html">
+<link rel="import" href="../login-chelitas/login-chelitas.html">
+
 <dom-module id="chelitas-app">
   <template>
     <style>
@@ -7,8 +8,9 @@
         display: block;
       }
     </style>
-    <h2>Hello [[prop1]]!</h2>
-    <chelitas-signin></chelitas-signin>
+
+    <login-chelitas></login-chelitas>
+
   </template>
 
   <script>
@@ -18,14 +20,6 @@
      */
     class ChelitasApp extends Polymer.Element {
       static get is() { return 'chelitas-app'; }
-      static get properties() {
-        return {
-          prop1: {
-            type: String,
-            value: 'chelitas-app'
-          }
-        };
-      }
     }
 
     window.customElements.define(ChelitasApp.is, ChelitasApp);
