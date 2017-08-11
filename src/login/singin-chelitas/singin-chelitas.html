@@ -1,0 +1,133 @@
+    <link rel="import" href="../../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../../bower_components/paper-button/paper-button.html">
+
+<!-- firebase-->
+<script src="../../../bower_components/firebase/firebase.js"></script>
+
+
+<dom-module id="singin-chelitas">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+
+      #btnfacebook{
+          background: #3F51B5;
+          color: #fff;
+      }
+
+      #btngoogle{
+          background: #F44336;
+          color: #fff;
+      }
+
+      paper-button{
+          width: 40%;
+          margin-left: 30%;
+      }
+    </style>
+
+    <paper-button raised class="indigo" id="btnfacebook" on-tap="signFacebook">Facebook</paper-button>
+    <br>
+    <br>
+    <paper-button raised class="indigo" id="btngoogle" on-tap="signGoogle">Google</paper-button>
+
+
+  </template>
+
+  <script>
+    (function Singin(){
+        'use strict';
+
+
+        class SinginChelitas extends Polymer.Element {
+
+            static get is() { return 'singin-chelitas'; }
+
+            static get properties() {
+                return {
+                    button: {
+                        type: String,
+                        notify: true,
+                        observer: "_signin"
+                    }
+                };
+            }
+
+            connectedCallback(){
+                let config = {
+                    apiKey: "AIzaSyDxcYm507yFlbsKtXJNQ7tDjxXf_HIJAR8",
+                    authDomain: "chelitas-24648.firebaseapp.com",
+                    databaseURL: "https://chelitas-24648.firebaseio.com",
+                    projectId: "chelitas-24648",
+                    storageBucket: "chelitas-24648.appspot.com",
+                    messagingSenderId: "220775801818"
+                };
+                firebase.initializeApp(config);
+            }
+
+            signFacebook(){
+                this.button = "Facebook";
+                //this._signin();
+            }
+
+            signGoogle(){
+                this.button = "Google";
+                //this._signin();
+            }
+
+            _signin(){
+                switch (this.button) {
+                    case "Facebook":
+                    alert(this.button);
+                        this._signinfacebook();
+                    case "Google":
+                    alert(this.button);
+                        this._signingoogle();
+                    default:
+                }
+            }
+
+            _signingoogle(){
+                let provider = new firebase.auth.GoogleAuthProvider();
+                provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
+                firebase.auth().signInWithPopup(provider).then(function(result) {
+                    let token = result.credential.accessToken;
+                    let secret = result.credential.secret;
+                    let user = result.user;
+                    if(user){
+                        console.log(user);
+                    }
+                }).catch(function(error) {
+                    let errorCode = error.code;
+                    let errorMessage = error.message;
+                    let email = error.email;
+                    let credential = error.credential;
+                    console.log(error);
+                });
+            }
+
+            _signinfacebook(){
+                let provider = new firebase.auth.FacebookAuthProvider();
+                firebase.auth().signInWithPopup(provider).then(function(result) {
+                    let token = result.credential.accessToken;
+		            let secret = result.credential.secret;
+                    let user = result.user;
+                    if(user){
+                        console.log(user);
+                    }
+                }).catch(function(error) {
+                    let errorCode = error.code;
+		            let errorMessage = error.message;
+            		let email = error.email;
+            		let credential = error.credential;
+            		console.log(credential);
+            	});
+            }
+        }
+
+        window.customElements.define(SinginChelitas.is,SinginChelitas);
+    })();
+  </script>
+</dom-module>
