@@ -1,30 +1,25 @@
-<!DOCTYPE html><html lang="en"><head>
+<!DOCTYPE html><html><head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
-
-    <title>chelitas</title>
-    <meta name="description" content="chelitas description">
-
-    <!-- See https://goo.gl/OOhYW5 -->
-    <link rel="manifest" href="/manifest.json">
-
-    <script src="/bower_components/webcomponentsjs/webcomponents-loader.js"></script>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=1.0, minimum-scale=1.0, maximum-scale=1.0">
+    <title>DirectoryApp</title>
+    <script src="node_modules/redux/dist/redux.min.js"></script>
+    <script type="javascript" src="/bower_components/webcomponentsjs/webcomponents-loader.js"></script>
+    <link rel="import" href="/src/redux-mixin/redux-mixin.html">
     <link rel="import" href="/src/chelitas-app/chelitas-app.html">
-
-    <!-- change a file -->
     <style>
-      html,body{
-        height: 100%;
-      }
-      body{
-        margin: auto;
-      }
+        html, body {
+            width: 100%;
+            height: 100%;
+            color: #000000;
+        }
     </style>
+</head>
+<body>
+<redux-mixin></redux-mixin>
+<chelitas-app></chelitas-app>
+<noscript>
+    Please enable JavaScript to view this website.
+</noscript>
 
-  </head>
-  <body>
-    <chelitas-app></chelitas-app>
-  
 
 </body></html>
