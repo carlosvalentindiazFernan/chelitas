@@ -6,7 +6,6 @@
 <link rel="import" href="../style/app-theme.html">
 <link rel="import" href="../singin-chelitas/singin-chelitas.html">
 
-
 <dom-module id="login-chelitas">
   <template>
     <style>
@@ -37,13 +36,15 @@
 
       .container-login{
         width: 100%;
-        margin-left: 20%;
+        margin-left: 15%;
         margin-top: -40px;
 
       }
 
       paper-card{
-        width: 30%;
+        width: 68%;
+        display: -webkit-flex;
+        display: flex;
       }
 
       #social-media{
@@ -51,18 +52,22 @@
         background: var(--default-primary-color)
       }
 
+      .card-content{
+        -webkit-flex: 2;
+        -ms-flex: 2;    
+        flex: 2;        
+      }
+
 
 
     </style>
-
-
-
 
     <div class="header">      
     </div>
 
     <div class="container-login">
       <paper-card>
+
         <div class="card-content">
           <form action="">
             <paper-input class="control" id="email" label="Correo" required="" auto-validate="" error-message="Correo necesario!">
@@ -77,23 +82,17 @@
           </form>
 
         </div>
-      </paper-card>
 
-       <paper-card>
         <div class="card-content">
-          <form action="">
-            <paper-input class="control" id="email" label="Correo" required="" auto-validate="" error-message="Correo necesario!">
-            </paper-input> 
-            
-            <paper-input label="Contraseña" type="password" required="" auto-validate="" error-message="Correo necesario!"></paper-input>
-            
+
+            <singin-chelitas></singin-chelitas>
             <br>
+            <br>            
+            <paper-button raised="" class="indigo">Google</paper-button>
 
-            <paper-button raised="" class="indigo">Iniciar</paper-button>
-
-          </form>
 
         </div>
+
       </paper-card>
 
 

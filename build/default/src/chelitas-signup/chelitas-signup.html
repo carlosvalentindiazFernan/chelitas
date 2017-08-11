@@ -1,0 +1,49 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<dom-module id="chelitas-signup">
+    <template>
+        <style media="screen">
+            :host{
+                width: 100%;
+                height: 100%;
+            }
+            .container{
+                width: 100%;
+                height: 100%;
+                display: flex;
+                flex-direction: row;
+            }
+            .mail{
+                width: 50%;
+                height: 100%;
+            }
+            .social{
+                width: 50%;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            }
+        </style>
+        <div class="container">
+            <div class="mail">
+                <paper-input label-float="" label="Email"></paper-input>
+                <paper-input label-float="" label="Password"></paper-input>
+                <paper-button>Submit</paper-button>
+            </div>
+            <div class="social">
+                <paper-button>Facebook</paper-button>
+            </div>
+        </div>
+    </template>
+    <script>
+        (function chelitasLoginDefinition(customElements){
+            class ChelitasSignup extends Polymer.Element {
+                static get is(){ return 'chelitas-signup'; }
+            }
+            customElements.define(ChelitasSignup.is, ChelitasSignup);
+        })(window.customElements);
+    </script>
+</dom-module>
