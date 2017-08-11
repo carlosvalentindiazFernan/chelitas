@@ -81,18 +81,17 @@
                 switch (this.button) {
                     case "Facebook":
                     alert(this.button);
-                        return this._signinfacebook();
+                        this._signinfacebook();
                     case "Google":
                     alert(this.button);
-                        return this._signingoogle();
+                        this._signingoogle();
                     default:
                 }
             }
 
             _signingoogle(){
                 let provider = new firebase.auth.GoogleAuthProvider();
-                provider.addScope('profile');
-                provider.addScope('email');
+                provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
                 firebase.auth().signInWithPopup(provider).then(function(result) {
                     let token = result.credential.accessToken;
                     let secret = result.credential.secret;
