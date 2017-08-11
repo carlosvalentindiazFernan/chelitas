@@ -1,9 +1,9 @@
-<link rel="import" href="../../bower_components/paper-button/paper-button.html">
-<link rel="import" href="../../bower_components/paper-card/paper-card.html">
-<link rel="import" href="../../bower_components/polymer/polymer-element.html">
-<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../../bower_components/polymer/polymer-element.html">
 
-<link rel="import" href="../style/app-theme.html">
+<link rel="import" href="../../style/app-theme.html">
 <link rel="import" href="../singin-chelitas/singin-chelitas.html">
 
 <dom-module id="login-chelitas">
@@ -58,6 +58,11 @@
         flex: 2;        
       }
 
+      #submit{
+        margin-left: 50%;
+        background: var(--default-primary-color);
+        color: #fff;
+      }
 
 
     </style>
@@ -77,7 +82,7 @@
             
             <br>
 
-            <paper-button raised class="indigo">Iniciar</paper-button>
+            <paper-button id="submit" raised class="indigo">Iniciar</paper-button>
 
           </form>
 
@@ -86,15 +91,15 @@
         <div class="card-content">
 
             <singin-chelitas></singin-chelitas>
-            <br>
-            <br>            
-            <paper-button raised class="indigo">Google</paper-button>
-
 
         </div>
-
+        
       </paper-card>
 
+        <div class="card-actions">
+            <paper-button>Registrate</paper-button>
+            <paper-button>Recuperar Contraseña</paper-button>
+        </div>
 
 
     </div>
