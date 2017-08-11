@@ -1,0 +1,71 @@
+    <link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+
+<!-- firebase-->
+<script src="../../bower_components/firebase/firebase.js"></script>
+
+
+<dom-module id="singin-chelitas">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+
+    <paper-button raised class="indigo" on-tap="_singinfacebook">Facebook</paper-button>
+
+  </template>
+
+  <script>
+    (function Singin(){
+        'use strict';
+
+
+        class SinginChelitas extends Polymer.Element {
+
+            static get is() { return 'singin-chelitas'; }
+
+            static get properties() {
+                return {
+                    prop1: {
+                        type: String,
+                        value: 'singin-chelitas'
+                    }
+                };
+            }
+
+            connectedCallback(){
+                let config = {
+                    apiKey: "AIzaSyDxcYm507yFlbsKtXJNQ7tDjxXf_HIJAR8",
+                    authDomain: "chelitas-24648.firebaseapp.com",
+                    databaseURL: "https://chelitas-24648.firebaseio.com",
+                    projectId: "chelitas-24648",
+                    storageBucket: "chelitas-24648.appspot.com",
+                    messagingSenderId: "220775801818"
+                };
+                firebase.initializeApp(config);                
+            }            
+
+            _singinfacebook(){
+                let provider = new firebase.auth.FacebookAuthProvider();
+         
+                firebase.auth().signInWithPopup(provider).then(function(result) {
+                    var token = result.credential.accessToken;
+		            var secret = result.credential.secret;
+                    console.log(token);
+                    console.log(secret);
+                }).catch(function(error) {
+                    var errorCode = error.code;
+		            var errorMessage = error.message;
+            		var email = error.email;
+            		var credential = error.credential;
+            		console.log(credential);
+            	}); 
+            }
+        }
+
+        window.customElements.define(SinginChelitas.is,SinginChelitas);
+    })();
+  </script>
+</dom-module>

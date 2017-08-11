@@ -1,0 +1,33 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+<dom-module id="singin-chelitas">
+  <template>
+    <script src="../../bower_components/polymer/polymer-element.html"></script>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <h2>Hello [[prop1]]!</h2>
+  </template>
+
+  <script>
+    (function Singin(){
+        'use strict';
+
+        class SinginChelitas extends Polymer.Element {
+            static get is() { return 'singin-chelitas'; }
+            static get properties() {
+                return {
+                    prop1: {
+                        type: String,
+                        value: 'singin-chelitas'
+                    }
+                };
+            }
+        }
+
+        window.customElements.define(SinginChelitas.is,SinginChelitas);
+    })();
+  </script>
+</dom-module>
