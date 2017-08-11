@@ -36,7 +36,7 @@
         'use strict';
 
 
-        class SinginChelitas extends ReduxMixin(Polymer.GestureEventListeners(Polymer.Element)) {
+        class SinginChelitas extends Polymer.GestureEventListeners(Polymer.Element) {
 
             static get is() { return 'singin-chelitas'; }
 
@@ -84,10 +84,8 @@
                 console.log(this.login);
                 switch (this.login){
                     case "Facebook":
-                        console.log(this.login);
                         this._signinfacebook();
                     case "Google":
-                        console.log(this.login);
                         this._signingoogle();
                     default:
                 }
