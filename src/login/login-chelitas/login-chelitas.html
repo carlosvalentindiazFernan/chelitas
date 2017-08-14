@@ -5,6 +5,8 @@
 
 <link rel="import" href="../../style/app-theme.html">
 <link rel="import" href="../singin-chelitas/singin-chelitas.html">
+<link rel="import" href="../signup-chelitas/signup-chelitas.html">
+<link rel="import" href="../recovery-chelitas/recovery-chelitas.html">
 
 <dom-module id="login-chelitas">
   <template>
@@ -89,16 +91,15 @@
         </div>
 
         <div class="card-content">
-
-            <singin-chelitas></singin-chelitas>
-
+            <singin-chelitas></singin-chelitas>          
         </div>
         
       </paper-card>
 
         <div class="card-actions">
-            <paper-button>Registrate</paper-button>
-            <paper-button>Recuperar Contraseña</paper-button>
+            <signup-chelitas></signup-chelitas>
+            <recovery-chelitas></recovery-chelitas>
+            
         </div>
 
 
