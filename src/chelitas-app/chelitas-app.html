@@ -12,10 +12,10 @@
         display: block;
       }
     </style>
-    <template is="dom-if" if="[[!user]]">
+    <template is="dom-if" if="[[!_exist(user)]]">
         <login-chelitas></login-chelitas>
     </template>
-    <template is="dom-if" if="[[user]]">
+    <template is="dom-if" if="[[_exist(user)]]">
         <profile-chelitas></profile-chelitas>
     </template>
   </template>
@@ -49,6 +49,18 @@
             connectedCallback(){
                 super.connectedCallback();
                 firebase.initializeApp(this.firebaseConfig);
+            }
+            isValidJson(json) {
+
+            }
+            _exist(user){
+                console.log(user);
+                try {
+                    JSON.parse(user);
+                    return true;
+                } catch (e) {
+                    return false;
+                }
             }
          }
          customElements.define(ChelitasApp.is, ChelitasApp);

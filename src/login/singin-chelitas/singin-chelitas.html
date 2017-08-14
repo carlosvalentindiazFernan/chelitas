@@ -49,6 +49,10 @@
                     firebaseConfig:{
                         type: Object,
                         statePath: 'config'
+                    },
+                    user:{
+                        type: Object,
+                        statePath: 'currentUser'
                     }
                 };
             }
@@ -87,17 +91,18 @@
                     default:
                 }
             }
-
+            _setUser(user){
+                this.user = user;
+            }
             _signingoogle(){
                 let provider = new firebase.auth.GoogleAuthProvider();
                 provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
                 firebase.auth().signInWithPopup(provider).then(function(result) {
                     let token = result.credential.accessToken;
                     let secret = result.credential.secret;
-                    let user = result.user;
-                    if(user){
-                        this.dispatch('loginUser',user);
-                    }
+                    let resultuser = result.user;
+                    console.log(resultuser);
+                    this.user = resultuser;
                 }).catch(function(error) {
                     let errorCode = error.code;
                     let errorMessage = error.message;
@@ -112,10 +117,8 @@
                 firebase.auth().signInWithPopup(provider).then(function(result) {
                     let token = result.credential.accessToken;
 		            let secret = result.credential.secret;
-                    let user = result.user;
-                    if(user){
-                        this.dispatch('loginUser',user);
-                    }
+                    let resultuser = result.user;
+                    console.log(resultuser);
                 }).catch(function(error) {
                     let errorCode = error.code;
 		            let errorMessage = error.message;

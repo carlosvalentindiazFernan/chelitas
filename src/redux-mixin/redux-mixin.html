@@ -18,15 +18,12 @@
         }],
         currentLenguage: 'en',//Lenguaje seleccionado para internacionalizacion por default español
         loginMethod: '',
-        currentUser: {
-            name: 'aldo',
-            picture: 'https://via.placeholder.com/350x150'
-        },//Usuario loggeado
+        currentUser: {},//Usuario loggeado
         users: [],//Usuarios registrados en la app
         places: []//Places que se llenaran al momento de consultar google places
     }
 
-    function userss(state = initialState, action){
+    function users(state = initialState, action){
         switch (action.type) {
             case "LOGIN_USER": {
                 return Object.assign({}, state, {
@@ -44,7 +41,7 @@
             }
         }
     }
-    const store = Redux.createStore(userss);
+    const store = Redux.createStore(users);
     const ReduxMixin = PolymerRedux(store);
 
 </script>
