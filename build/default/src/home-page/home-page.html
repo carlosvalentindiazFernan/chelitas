@@ -1,0 +1,36 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<dom-module id="home-page">
+    <template>
+        <style>
+            .container{
+                width: 100%;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                background-color: #EBEBEB;
+                margin: 0 auto;
+            }
+        </style>
+        <div class="container">
+            <h4>[[prop]]</h4>
+        </div>
+    </template>
+    <script>
+        (function(customElements){
+            class HomePage extends Polymer.Element{
+                static get is(){ return 'home-page'; }
+                static get properties(){
+                    return{
+                        prop:{
+                            type: String,
+                            value: 'Home Page'
+                        }
+                    };
+                }
+            }
+            customElements.define(HomePage.is, HomePage);
+        })(window.customElements);
+    </script>
+</dom-module>
