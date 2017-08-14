@@ -1,5 +1,9 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/polymer/lib/elements/dom-if.html">
 <link rel="import" href="../login/login-chelitas/login-chelitas.html">
+<link rel="import" href="../profile-chelitas/profile-chelitas.html">
+<link rel="import" href="../place-chelitas/place-chelitas.html">
+<script src="../../bower_components/firebase/firebase.js"></script>
 
 <dom-module id="chelitas-app">
   <template>
@@ -8,9 +12,12 @@
         display: block;
       }
     </style>
-
-    <login-chelitas></login-chelitas>
-
+    <template is="dom-if" if="[[user]]">
+        <login-chelitas></login-chelitas>
+    </template>
+    <template is="dom-if" if="[[user]]">
+        <profile-chelitas></profile-chelitas>
+    </template>
   </template>
 
   <script>
@@ -18,10 +25,28 @@
      * @customElement
      * @polymer
      */
-    class ChelitasApp extends Polymer.Element {
-      static get is() { return 'chelitas-app'; }
-    }
+     (function ChelitasAppDefinition(customElement){
+         class ChelitasApp extends ReduxMixin(Polymer.Element) {
+           static get is() { return 'chelitas-app'; }
+           static get properties(){
+               return{
+                   user:{
+                       type: Object,
+                       statePath: 'currentUser'
+                   },
+                   lenguage:{
+                       type: String,
+                       statePath: 'currentLenguage'
+                   },
 
-    window.customElements.define(ChelitasApp.is, ChelitasApp);
+               };
+           }
+            connectedCallback(){
+                super.connectedCallback();
+            }
+         }
+         customElements.define(ChelitasApp.is, ChelitasApp);
+     })(window.customElements);
+
   </script>
 </dom-module>

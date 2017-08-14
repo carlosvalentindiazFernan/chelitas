@@ -15,6 +15,8 @@
 <link rel="import" href="../../bower_components/app-route/app-location.html">
 <link rel="import" href="../../bower_components/app-route/app-route.html">
 <link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+<!--FIREBASE-->
+<script src="../../bower_components/firebase/firebase.js"></script>
 <!--PAGES-->
 <link rel="import" href="../home-page/home-page.html">
 <link rel="import" href="../place-chelitas/place-chelitas.html">
@@ -169,8 +171,8 @@
                     <a class="icon-logout" href="/logout">
                         <iron-icon icon="icons:exit-to-app"></iron-icon>
                     </a>
-                    <img class="userpicture" src="https://d30y9cdsu7xlg0.cloudfront.net/png/212110-200.png" alt="[[username]]">
-                    <p class="username">ALDO ALDACO CONTRERAS[[username]]</p>
+                    <img class="userpicture" src="[[user.picture]]https://d30y9cdsu7xlg0.cloudfront.net/png/212110-200.png" alt="[[user.name]]">
+                    <p class="username">[[user.name]]ALDO ALDACO CONTRERAS[[username]]</p>
                 </app-toolbar>
                 <app-toolbar class="drawer-nav">
                     <a class="link" href="/home">
@@ -206,9 +208,9 @@
                     <home-page class="home" view="home"></home-page>
                     <settings-page class="settings" view="settings"></settings-page>
                     <error-page view="404"></error-page>
-                    <list-loved view="loved"></list-loved>
-                    <list-visited view="visited"></list-visited>
-                    <list-ranked view="ranked"></list-ranked>
+                    <list-loved loveList=[[user.list.love]] view="loved"></list-loved>
+                    <list-visited loveList=[[user.list.visit]] view="visited"></list-visited>
+                    <list-ranked loveList=[[user.list.rank]] view="ranked"></list-ranked>
                 </iron-pages>
             </app-header-layout>
 

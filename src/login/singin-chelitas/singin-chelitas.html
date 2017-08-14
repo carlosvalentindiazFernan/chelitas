@@ -36,7 +36,7 @@
         'use strict';
 
 
-        class SinginChelitas extends Polymer.GestureEventListeners(Polymer.Element) {
+        class SinginChelitas extends ReduxMixin(Polymer.GestureEventListeners(Polymer.Element)) {
 
             static get is() { return 'singin-chelitas'; }
 
@@ -51,17 +51,17 @@
 
             static get actions() {
                 return {
-                    loginUser(method) {
+                    loginUser(user) {
                         return {
                             type: 'LOGIN_USER',
-                            method
+                            user
                         };
                     }
                 };
             }
 
             connectedCallback(){
-                let config = {
+                const firebaseConfig = {
                     apiKey: "AIzaSyDxcYm507yFlbsKtXJNQ7tDjxXf_HIJAR8",
                     authDomain: "chelitas-24648.firebaseapp.com",
                     databaseURL: "https://chelitas-24648.firebaseio.com",
@@ -69,7 +69,7 @@
                     storageBucket: "chelitas-24648.appspot.com",
                     messagingSenderId: "220775801818"
                 };
-                firebase.initializeApp(config);
+                firebase.initializeApp(firebaseConfig);
             }
 
             signFacebook(){
@@ -117,7 +117,7 @@
 		            let secret = result.credential.secret;
                     let user = result.user;
                     if(user){
-                        console.log(user);
+                        this.dispatch('loginUser',user);
                     }
                 }).catch(function(error) {
                     let errorCode = error.code;
