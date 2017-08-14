@@ -30,8 +30,8 @@
                 return Object.assign({}, state, {
                     languages: state.languages,
                     currentLenguage: state.currentLenguage,
-                    loginMethod: action.method,
-                    currentUser: state.currentUser,
+                    loginMethod: state.loginMethod,
+                    currentUser: action.user,
                     users: state.users,
                     places: state.places
                 });

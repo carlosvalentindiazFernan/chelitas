@@ -17,7 +17,6 @@
 <link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
 <!--PAGES-->
 <link rel="import" href="../home-page/home-page.html">
-<link rel="import" href="../login-chelitas/login-chelitas.html">
 <link rel="import" href="../place-chelitas/place-chelitas.html">
 
 <dom-module id="profile-chelitas">
@@ -203,7 +202,6 @@
                     </div>
                 </app-header>
                 <iron-pages class="body" selected="[[routeData.view]]" attr-for-selected="view" fallback-selection="place">
-                    <login-c class="login" view="login"></login-c>
                     <place-chelitas class="login" view="place"></place-chelitas>
                     <home-page class="home" view="home"></home-page>
                     <settings-page class="settings" view="settings"></settings-page>
