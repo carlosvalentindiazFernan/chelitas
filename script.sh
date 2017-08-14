@@ -1,0 +1,3 @@
+polymer build
+firebase deploy
+
