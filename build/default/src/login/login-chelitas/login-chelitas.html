@@ -12,16 +12,41 @@
   <template>
     <style>
       
+      .header{
+        width: 100%;
+        height: 260px;
+        background: url("http://www.testaccina.com/wp-content/uploads/2013/06/beer-smallok.jpg") no-repeat center center fixed;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        opacity: .8;        
+      }
+
+      .header::before{
+        z-index: -1;
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        background: rgba(244, 67, 54, 0.47);
+        width: 100%;
+        height: 260px;
+      }
+
       .container-login{
-        width: 70%;
-        margin-left: 25%;
-        margin-top: 10%;
+        width: 100%;
+        margin-left: 15%;
+        margin-top: -40px;
 
       }
 
       paper-card{
         width: 68%;
         display: -webkit-flex;
+        display: flex;
       }
 
       #social-media{
@@ -30,39 +55,43 @@
       }
 
       .card-content{
-        width: 100%;
+        -webkit-flex: 2;
+        -ms-flex: 2;    
+        flex: 2;        
       }
 
       #submit{
-        margin-left: 40%;
+        margin-left: 50%;
         background: var(--default-primary-color);
         color: #fff;
       }
-      
 
 
     </style>
 
+    <div class="header">      
+    </div>
 
     <div class="container-login">
-      <paper-card >
+      <paper-card>
 
         <div class="card-content">
-          <singin-chelitas></singin-chelitas>          
-          <br>
-          <hr></hr>
           <form action="">
-            <paper-input class="control" id="email" label="Correo" required auto-validate error-message="Correo necesario!">
+            <paper-input class="control" id="email" label="Correo" required="" auto-validate="" error-message="Correo necesario!">
             </paper-input> 
             
-            <paper-input label="Contraseña" type="password" required auto-validate error-message="Correo necesario!"></paper-input>
+            <paper-input label="Contraseña" type="password" required="" auto-validate="" error-message="Correo necesario!"></paper-input>
             
             <br>
 
-            <paper-button id="submit" raised class="indigo">Iniciar</paper-button>
+            <paper-button id="submit" raised="" class="indigo">Iniciar</paper-button>
 
           </form>
 
+        </div>
+
+        <div class="card-content">
+            <singin-chelitas></singin-chelitas>          
         </div>
         
       </paper-card>

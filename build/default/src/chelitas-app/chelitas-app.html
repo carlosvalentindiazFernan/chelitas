@@ -1,0 +1,27 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../login/login-chelitas/login-chelitas.html">
+
+<dom-module id="chelitas-app">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+
+    <login-chelitas></login-chelitas>
+
+  </template>
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class ChelitasApp extends Polymer.Element {
+      static get is() { return 'chelitas-app'; }
+    }
+
+    window.customElements.define(ChelitasApp.is, ChelitasApp);
+  </script>
+</dom-module>
