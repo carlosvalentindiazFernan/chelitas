@@ -12,7 +12,7 @@
         display: block;
       }
     </style>
-    <template is="dom-if" if="[[user]]">
+    <template is="dom-if" if="[[!user]]">
         <login-chelitas></login-chelitas>
     </template>
     <template is="dom-if" if="[[user]]">
@@ -26,6 +26,7 @@
      * @polymer
      */
      (function ChelitasAppDefinition(customElement){
+         'use strict';
          class ChelitasApp extends ReduxMixin(Polymer.Element) {
            static get is() { return 'chelitas-app'; }
            static get properties(){
@@ -38,11 +39,16 @@
                        type: String,
                        statePath: 'currentLenguage'
                    },
+                   firebaseConfig: {
+                       type: Object,
+                       statePath: 'config'
+                   }
 
                };
            }
             connectedCallback(){
                 super.connectedCallback();
+                firebase.initializeApp(this.firebaseConfig);
             }
          }
          customElements.define(ChelitasApp.is, ChelitasApp);
