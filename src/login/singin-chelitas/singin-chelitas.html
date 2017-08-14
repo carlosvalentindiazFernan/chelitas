@@ -1,6 +1,6 @@
-    <link rel="import" href="../../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../../../bower_components/paper-button/paper-button.html">
-
+<link rel="import" href="../../../bower_components/polymer/lib/mixins/gesture-event-listeners.html">
 <!-- firebase-->
 <script src="../../../bower_components/firebase/firebase.js"></script>
 
@@ -27,13 +27,8 @@
           margin-left: 30%;
       }
     </style>
-
-    <paper-button raised class="indigo" id="btnfacebook" on-tap="signFacebook">Facebook</paper-button>
-    <br>
-    <br>
+    <paper-button raised class="indigo" id="btnfacebook" on-tap="signFacebook">Facebook</paper-button><br><br>
     <paper-button raised class="indigo" id="btngoogle" on-tap="signGoogle">Google</paper-button>
-
-
   </template>
 
   <script>
@@ -41,16 +36,26 @@
         'use strict';
 
 
-        class SinginChelitas extends Polymer.Element {
+        class SinginChelitas extends Polymer.GestureEventListeners(Polymer.Element) {
 
             static get is() { return 'singin-chelitas'; }
 
             static get properties() {
                 return {
-                    button: {
+                    login: {
                         type: String,
-                        notify: true,
-                        observer: "_signin"
+                        observer: '_signin'
+                    }
+                };
+            }
+
+            static get actions() {
+                return {
+                    loginUser(method) {
+                        return {
+                            type: 'LOGIN_USER',
+                            method
+                        };
                     }
                 };
             }
@@ -68,22 +73,19 @@
             }
 
             signFacebook(){
-                this.button = "Facebook";
-                //this._signin();
+                this.login = "Facebook";
             }
 
             signGoogle(){
-                this.button = "Google";
-                //this._signin();
+                this.login = "Google";
             }
 
             _signin(){
-                switch (this.button) {
+                console.log(this.login);
+                switch (this.login){
                     case "Facebook":
-                    alert(this.button);
                         this._signinfacebook();
                     case "Google":
-                    alert(this.button);
                         this._signingoogle();
                     default:
                 }
