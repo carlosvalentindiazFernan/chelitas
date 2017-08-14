@@ -12,11 +12,11 @@
             <paper-input class="control" id="email" label="Correo" required auto-validate error-message="Correo necesario!">
             </paper-input> 
             
-            <paper-input label="Contraseña" type="password" required auto-validate error-message="Correo necesario!"></paper-input>
+            <paper-input label="Contraseña" id="password" type="password" required auto-validate error-message="Correo necesario!"></paper-input>
             
             <br>
 
-            <paper-button id="submit" raised class="indigo">Iniciar</paper-button>
+            <paper-button id="submit"on-tap="_submitsignup" raised class="indigo">Iniciar</paper-button>
 
           </form>
       <div class="buttons">
@@ -37,6 +37,13 @@
 
             _signupdialog(){
               this.$.dialog.open();
+            }
+
+            _submitsignup(){
+
+              let password=this.$.password.value;
+              let email=this.$.email.value;                
+
             }
             
         }

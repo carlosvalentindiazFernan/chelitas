@@ -1,0 +1,44 @@
+<link rel="import" href="../../../bower_components/polymer/polymer-element.html">
+
+<dom-module id="signinemail-chelitas">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+
+    <form action="">
+
+        <paper-input class="control" id="email" label="Correo" required auto-validate error-message="Correo necesario!">
+        </paper-input> 
+
+        <paper-input label="Contraseña" id="password" type="password" required 
+                        auto-validate error-message="Correo necesario!"></paper-input>    
+        <br>
+        <paper-button id="submit" raised class="indigo" on-tap="_submitsignin">Iniciar</paper-button>
+
+    </form>
+
+
+  </template>
+
+  <script>
+    (function SiginEmail(){
+        'use strict';
+
+        class SigninEmailChelitas extends Polymer.Element {
+            static get is() { return 'signinemail-chelitas'; }
+
+            _submitsignin(){
+                let password=this.$.password.value;
+                let email=this.$.email.value;                
+            }
+        }
+
+        window.customElements.define(SigninEmailChelitas.is, SigninEmailChelitas);
+    })();
+
+
+  </script>
+</dom-module>

@@ -7,6 +7,7 @@
 <link rel="import" href="../singin-chelitas/singin-chelitas.html">
 <link rel="import" href="../signup-chelitas/signup-chelitas.html">
 <link rel="import" href="../recovery-chelitas/recovery-chelitas.html">
+<link rel="import" href="../signin-email-chelitas/signin-email-chelitas.html">
 
 <dom-module id="login-chelitas">
   <template>
@@ -51,17 +52,7 @@
           <singin-chelitas></singin-chelitas>          
           <br>
           <hr></hr>
-          <form action="">
-            <paper-input class="control" id="email" label="Correo" required auto-validate error-message="Correo necesario!">
-            </paper-input> 
-            
-            <paper-input label="Contraseña" type="password" required auto-validate error-message="Correo necesario!"></paper-input>
-            
-            <br>
-
-            <paper-button id="submit" raised class="indigo">Iniciar</paper-button>
-
-          </form>
+          <signinemail-chelitas></signinemail-chelitas>
 
         </div>
         
