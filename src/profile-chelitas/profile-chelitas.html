@@ -203,14 +203,13 @@
                         </paper-button>
                     </div>
                 </app-header>
-                <iron-pages class="body" selected="[[routeData.view]]" attr-for-selected="view" fallback-selection="place">
-                    <place-chelitas class="login" view="place"></place-chelitas>
+                <iron-pages class="body" selected="[[routeData.view]]" attr-for-selected="view" fallback-selection="home">
                     <home-page class="home" view="home"></home-page>
                     <settings-page class="settings" view="settings"></settings-page>
-                    <error-page view="404"></error-page>
                     <list-loved loveList=[[user.list.love]] view="loved"></list-loved>
                     <list-visited loveList=[[user.list.visit]] view="visited"></list-visited>
                     <list-ranked loveList=[[user.list.rank]] view="ranked"></list-ranked>
+                    <error-page view="404"></error-page>
                 </iron-pages>
             </app-header-layout>
 
@@ -218,14 +217,17 @@
     </template>
     <script>
         (function profileChelitasDefinition(customElements){
-            class ProfileChelitas extends Polymer.Element {
+            class ProfileChelitas extends ReduxMixin(Polymer.Element) {
                 static get is(){ return 'profile-chelitas'; }
-                static get properties(){
-                    return{
-                        prop:{
-                            type: Boolean,
-                            value: true,
-                            notify: true
+                static get properties() {
+                    return {
+                        user:{
+                            type: Object,
+                            statePath: 'currentUser'    
+                        },
+                        firebaseConfig:{
+                            type: Object,
+                            statePath: 'config'
                         }
                     };
                 }
@@ -234,6 +236,10 @@
                         '_routePageChanged(routeData.view)',
                         '_pageChanged(routeData.view)',
                     ];
+                }
+                connectedCallback(){
+                    super.connectedCallback();
+                    firebase.initializeApp(this.firebaseConfig);
                 }
                 _routePageChanged(page) {
                     this.page = page || 'default';
@@ -247,9 +253,6 @@
                 }
                 _showPage404(page) {
                     this.page = '404';
-                }
-                _logout(){
-
                 }
             }
             customElements.define(ProfileChelitas.is, ProfileChelitas);

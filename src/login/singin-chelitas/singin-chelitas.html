@@ -32,7 +32,7 @@
   </template>
 
   <script>
-    (function Singin(){
+    (function SinginDefinition(){
         'use strict';
 
 
@@ -45,6 +45,10 @@
                     login: {
                         type: String,
                         observer: '_signin'
+                    },
+                    firebaseConfig:{
+                        type: Object,
+                        statePath: 'config'
                     }
                 };
             }
@@ -61,15 +65,8 @@
             }
 
             connectedCallback(){
-                const firebaseConfig = {
-                    apiKey: "AIzaSyDxcYm507yFlbsKtXJNQ7tDjxXf_HIJAR8",
-                    authDomain: "chelitas-24648.firebaseapp.com",
-                    databaseURL: "https://chelitas-24648.firebaseio.com",
-                    projectId: "chelitas-24648",
-                    storageBucket: "chelitas-24648.appspot.com",
-                    messagingSenderId: "220775801818"
-                };
-                firebase.initializeApp(firebaseConfig);
+                super.connectedCallback();
+                firebase.initializeApp(this.firebaseConfig);
             }
 
             signFacebook(){
