@@ -99,7 +99,7 @@
                     let secret = result.credential.secret;
                     let user = result.user;
                     if(user){
-                        console.log(user);
+                        this.dispatch('loginUser',user);
                     }
                 }).catch(function(error) {
                     let errorCode = error.code;
