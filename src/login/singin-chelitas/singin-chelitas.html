@@ -10,47 +10,49 @@
 
 <dom-module id="singin-chelitas">
   <template>
-        <style>
-          :host {
-            display: block;
-          }
+      <!--<template is="dom-if" if="[[!user]]">-->
+            <style>
+              :host {
+                display: block;
+              }
 
-          #btnfacebook{
-              background: #3F51B5;
-              color: #fff;
-          }
+              #btnfacebook{
+                  background: #3F51B5;
+                  color: #fff;
+              }
 
-          #btngoogle{
-              background: #F44336;
-              color: #fff;
-          }
+              #btngoogle{
+                  background: #F44336;
+                  color: #fff;
+              }
 
-          paper-button{
-              width: 40%;
-              margin-left: 30%;
-          }
-        </style>
-        <firebase-app
-          auth-domain="chelitas-24648.firebaseapp.com"
-          database-url="https://chelitas-24648.firebaseio.com"
-          api-key="AIzaSyDxcYm507yFlbsKtXJNQ7tDjxXf_HIJAR8"
-          storage-bucket="chelitas-24648.appspot.com"
-          messaging-sender-id="220775801818">
-        </firebase-app>
-        <firebase-auth
-                id="google"
-                user="{{user}}"
-                status-known="{{statusKnown}}"
-                provider="google">
-        </firebase-auth>
-        <firebase-auth
-                id="facebook"
-                user="{{user}}"
-                status-known="{{statusKnown}}"
-                provider="facebook">
-        </firebase-auth>
-        <paper-button raised class="indigo" id="btnfacebook" on-tap="loginFacebook">Facebook</paper-button><br><br>
-        <paper-button raised class="indigo" id="btngoogle" on-tap="loginGoogle">Google</paper-button>
+              paper-button{
+                  width: 40%;
+                  margin-left: 30%;
+              }
+            </style>
+            <firebase-app
+              auth-domain="chelitas-24648.firebaseapp.com"
+              database-url="https://chelitas-24648.firebaseio.com"
+              api-key="AIzaSyDxcYm507yFlbsKtXJNQ7tDjxXf_HIJAR8"
+              storage-bucket="chelitas-24648.appspot.com"
+              messaging-sender-id="220775801818">
+            </firebase-app>
+            <firebase-auth
+                    id="google"
+                    user="{{user}}"
+                    status-known="{{statusKnown}}"
+                    provider="google">
+            </firebase-auth>
+            <firebase-auth
+                    id="facebook"
+                    user="{{user}}"
+                    status-known="{{statusKnown}}"
+                    provider="facebook">
+            </firebase-auth>
+            <paper-button raised class="indigo" id="btnfacebook" on-tap="loginFacebook">Facebook</paper-button><br><br>
+            <paper-button raised class="indigo" id="btngoogle" on-tap="loginGoogle">Google</paper-button>
+        <!--</template>-->
   </template>
 
   <script>
@@ -68,6 +70,11 @@
                         type: Object,
                         statePath: 'currentUser',
                         observer: 'userActive'
+                    },
+                    isLogged: {
+                        type: Boolean,
+                        statePath: 'isLogged',
+                        observer: 'userInactive'
                     }
                 };
             }
@@ -78,6 +85,12 @@
                         return {
                             type: 'LOGIN_USER',
                             user
+                        };
+                    },
+                    logoutUser(logged) {
+                        return {
+                            type: 'LOGOUT_USER',
+                            logged
                         };
                     }
                 };
@@ -92,7 +105,7 @@
                     return response;
                 })
                 .catch(function(error) {
-                    console.log(error);
+                    console.log("error in login facebook");
                 });
             }
             loginGoogle(){
@@ -100,13 +113,25 @@
                 .then(function(response) {
                     return response;
                 })
-                .catch(function(error) { console.log(error) });
+                .catch(function(error) {
+                    console.log("error in login google");
+                });
             }
+
             userActive(){
+                console.log("userActive object user: "+this.user);
                 if(this.user){
                     this.dispatch('loginUser', this.user);
                 } else {
-                    console.log("error");
+                    console.log("error in dispatch loginUser");
+                }
+            }
+            userInactive(){
+                console.log("userInactive object user: "+this.user);
+                if(!this.isLogged){
+                    this.dispatch('logoutUser', false);
+                } else {
+                    this.dispatch('loginUser', this.user);
                 }
             }
         }
