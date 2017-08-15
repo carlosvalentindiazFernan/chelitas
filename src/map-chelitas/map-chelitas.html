@@ -1,13 +1,22 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/google-map/google-map.html">
 
 <dom-module id="map-chelitas">
   <template>
+
     <style>
-      :host {
-        display: block;
+      google-map {
+        height: 500px; 
+        width: 100%; 
+        position:absolute; 
+        top: 0; 
+        left: 0; 
+        z-index: 0; 
       }
     </style>
-    <h2>Hello [[prop1]]!</h2>
+    
+    <google-map latitude="37.77493" longitude="-122.41942" ></google-map>
+
   </template>
 
   <script>
@@ -16,14 +25,6 @@
 
         class MapChelitas extends Polymer.Element {
             static get is() { return 'map-chelitas'; }
-            static get properties() {
-                return {
-                    prop1: {
-                        type: String,
-                        value: 'map-chelitas'
-                    }
-                };
-            }
         }
 
         window.customElements.define(MapChelitas.is, MapChelitas);

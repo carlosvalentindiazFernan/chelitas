@@ -171,8 +171,8 @@
                     <a class="icon-logout" href="/logout">
                         <iron-icon icon="icons:exit-to-app"></iron-icon>
                     </a>
-                    <img class="userpicture" src="[[user.picture]]https://d30y9cdsu7xlg0.cloudfront.net/png/212110-200.png" alt="[[user.name]]">
-                    <p class="username">[[user.name]]ALDO ALDACO CONTRERAS[[username]]</p>
+                    <img class="userpicture" src="[[user.photoURL]]" alt="[[user.displayName]]">
+                    <p class="username">[[user.email]]</p>
                 </app-toolbar>
                 <app-toolbar class="drawer-nav">
                     <a class="link" href="/home">
@@ -223,7 +223,7 @@
                     return {
                         user:{
                             type: Object,
-                            statePath: 'currentUser'    
+                            statePath: 'currentUser',
                         },
                         firebaseConfig:{
                             type: Object,
@@ -235,11 +235,21 @@
                     return [
                         '_routePageChanged(routeData.view)',
                         '_pageChanged(routeData.view)',
+                        'userActive(user)'
                     ];
+                }
+                static get actions() {
+                    return {
+                        loginUser(user) {
+                            return {
+                                type: 'LOGIN_USER',
+                                user
+                            };
+                        }
+                    };
                 }
                 connectedCallback(){
                     super.connectedCallback();
-                    firebase.initializeApp(this.firebaseConfig);
                 }
                 _routePageChanged(page) {
                     this.page = page || 'default';

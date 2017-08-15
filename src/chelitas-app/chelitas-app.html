@@ -15,8 +15,9 @@
     <template is="dom-if" if="[[!user]]">
         <login-chelitas></login-chelitas>
     </template>
-    <template is="dom-if" if="[[!user]]">
-        <profile-chelitas></profile-chelitas>
+
+    <template is="dom-if" if="[[user]]">
+        <profile-chelitas user="[[user]]"></profile-chelitas>
     </template>
   </template>
 
@@ -33,7 +34,8 @@
                return{
                    user:{
                        type: Object,
-                       statePath: 'currentUser'
+                       statePath: 'currentUser',
+                       observer: 'userActive'
                    },
                    lenguage:{
                        type: String,
@@ -48,7 +50,22 @@
            }
             connectedCallback(){
                 super.connectedCallback();
-                firebase.initializeApp(this.firebaseConfig);
+                console.log(this.user);
+            }
+            _exist(user){
+                try {
+                    JSON.parse(user);
+                    return true;
+                } catch (e) {
+                    return false;
+                }
+            }
+            userActive(){
+                if(this.user){
+                    console.log("logged");
+                } else {
+                    console.log("asdlkalskjdlk");
+                }
             }
          }
          customElements.define(ChelitasApp.is, ChelitasApp);

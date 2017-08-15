@@ -1,4 +1,5 @@
 <link rel="import" href="../../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../../bower_components/polymerfire/firebase-auth.html">
 <link rel="import" href="../../../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../../../bower_components/polymer/lib/mixins/gesture-event-listeners.html">
 <!-- firebase-->
@@ -27,8 +28,20 @@
           margin-left: 30%;
       }
     </style>
-    <paper-button raised class="indigo" id="btnfacebook" on-tap="signFacebook">Facebook</paper-button><br><br>
-    <paper-button raised class="indigo" id="btngoogle" on-tap="signGoogle">Google</paper-button>
+    <firebase-auth
+        id="google"
+        user="{{user}}"
+        status-known="{{statusKnown}}"
+        provider="google">
+    </firebase-auth>
+    <firebase-auth
+        id="facebook"
+        user="{{user}}"
+        status-known="{{statusKnown}}"
+        provider="facebook">
+    </firebase-auth>
+    <paper-button raised class="indigo" id="btnfacebook" on-tap="_signinFacebook">Facebook</paper-button><br><br>
+    <paper-button raised class="indigo" id="btngoogle" on-tap="_signinGoogle">Google</paper-button>
   </template>
 
   <script>
@@ -42,9 +55,10 @@
 
             static get properties() {
                 return {
-                    login: {
-                        type: String,
-                        observer: '_signin'
+                    user:{
+                        type: Object,
+                        statePath: 'currentUser',
+                        observer: 'userActive'
                     },
                     firebaseConfig:{
                         type: Object,
@@ -66,63 +80,27 @@
 
             connectedCallback(){
                 super.connectedCallback();
-                firebase.initializeApp(this.firebaseConfig);
+                //firebase.initializeApp(this.firebaseConfig);
+                console.log(this.user);
+            }
+            _signinGoogle(){
+                this.$.google.signInWithPopup()
+                .then(function(response) { return response })
+                .catch(function(error) { console.log(error) });
+            }
+            _signinFacebook(){
+                this.$.facebook.signInWithPopup()
+                .then(function(response) { return response })
+                .catch(function(error) { console.log(error) });
             }
 
-            signFacebook(){
-                this.login = "Facebook";
-            }
-
-            signGoogle(){
-                this.login = "Google";
-            }
-
-            _signin(){
-                console.log(this.login);
-                switch (this.login){
-                    case "Facebook":
-                        this._signinfacebook();
-                    case "Google":
-                        this._signingoogle();
-                    default:
+            userActive(){
+                console.log(this.user);
+                if(this.user){
+                    this.dispatch('loginUser', this.user);
+                } else {
+                    this.user = {};
                 }
-            }
-
-            _signingoogle(){
-                let provider = new firebase.auth.GoogleAuthProvider();
-                provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
-                firebase.auth().signInWithPopup(provider).then(function(result) {
-                    let token = result.credential.accessToken;
-                    let secret = result.credential.secret;
-                    let user = result.user;
-                    if(user){
-                        this.dispatch('loginUser',user);
-                    }
-                }).catch(function(error) {
-                    let errorCode = error.code;
-                    let errorMessage = error.message;
-                    let email = error.email;
-                    let credential = error.credential;
-                    console.log(error);
-                });
-            }
-
-            _signinfacebook(){
-                let provider = new firebase.auth.FacebookAuthProvider();
-                firebase.auth().signInWithPopup(provider).then(function(result) {
-                    let token = result.credential.accessToken;
-		            let secret = result.credential.secret;
-                    let user = result.user;
-                    if(user){
-                        this.dispatch('loginUser',user);
-                    }
-                }).catch(function(error) {
-                    let errorCode = error.code;
-		            let errorMessage = error.message;
-            		let email = error.email;
-            		let credential = error.credential;
-            		console.log(credential);
-            	});
             }
         }
 
