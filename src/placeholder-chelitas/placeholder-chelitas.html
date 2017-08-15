@@ -1,0 +1,31 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+
+<dom-module id="placeholder-chelitas">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+
+    <iron-ajax
+        auto
+        url="https://maps.googleapis.com/maps/api/place/nearbysearch/json"
+        params='{"location":"-33.8670522,151.1957362", "rankby":"distance","types":"food", "key": "AIzaSyDksNVtDMLV9M0-Ut2uvEwJQ7JlW__8ZEA", "type": "video"}'
+        handle-as="json"
+        on-response="handleResponse"
+        debounce-duration="300"></iron-ajax>
+
+  </template>
+
+  <script>
+    (function placeholder(){
+        'use strict';
+        class PlaceholderChelitas extends Polymer.Element {
+            static get is() { return 'placeholder-chelitas'; }
+        }
+        window.customElements.define(PlaceholderChelitas.is, PlaceholderChelitas);
+    })();
+  </script>
+</dom-module>
