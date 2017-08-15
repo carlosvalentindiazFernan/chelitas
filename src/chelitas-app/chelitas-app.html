@@ -1,5 +1,5 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
-<link rel="import" href="../login/login-chelitas/login-chelitas.html">
+<link rel="import" href="../login/singin-chelitas/singin-chelitas.html">
 <link rel="import" href="../profile-chelitas/profile-chelitas.html">
 <link rel="import" href="../place-chelitas/place-chelitas.html">
 <script src="../../bower_components/firebase/firebase.js"></script>
@@ -12,10 +12,9 @@
         display: block;
       }
     </style>
-
     <template is="dom-if" if="{{!isLogged}}">
-        <login-chelitas></login-chelitas>
-    </template>    
+        <singin-chelitas></singin-chelitas>
+    </template>
     <template is="dom-if" if="{{isLogged}}">
         <profile-chelitas></profile-chelitas>
     </template>
@@ -34,17 +33,49 @@
                return{
                    user: {
                        type: Object,
-                       statePath: 'currentUser'
+                       statePath: 'currentUser',
+                       observer: 'userActive'
                    },
                    isLogged: {
                        type: Boolean,
-                       statePath: 'isLogged'
+                       statePath: 'isLogged',
+                       observer: 'userInactive'
                    }
                };
             }
-            connectedCallback(){
-                super.connectedCallback();
+            static get actions() {
+                return {
+                    loginUser(user) {
+                        return {
+                            type: 'LOGIN_USER',
+                            user
+                        };
+                    },
+                    logoutUser(logged) {
+                        return {
+                            type: 'LOGOUT_USER',
+                            logged
+                        };
+                    }
+                };
             }
+            userActive(){
+                console.log("userActive object user: "+this.user);
+                if(this.user){
+                    this.dispatch('loginUser', this.user);
+                } else {
+                    console.log("error in dispatch loginUser");
+                }
+            }
+            userInactive(){
+                console.log("userInactive object user: "+this.user);
+                if(!this.isLogged){
+                    this.dispatch('logoutUser', false);
+                } else {
+                    this.dispatch('loginUser', this.user);
+                }
+            }
+
          }
          customElements.define(ChelitasApp.is, ChelitasApp);
      })(window.customElements);

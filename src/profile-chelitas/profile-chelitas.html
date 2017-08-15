@@ -64,15 +64,30 @@
             background-color: #F4810A;
         }
         .userpicture{
-            width: calc(55% - 6px);
-            height: calc(45% - 6px);
+            width: calc(65% - 6px);
+            height: calc(55% - 6px);
             border: 3px solid #1e1b1b;
             border-radius: 50%;
             background-color: #EBEBEB;
         }
         .username{
             width: 100%;
-            height: 20%;
+            height: 10%;
+            margin: 0px;
+            margin-top: 10px;
+            padding: 0px;
+            font-size: 10px;
+            font-family: sans-serif;
+            font-weight: bold;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-transform: uppercase;
+        }
+        .useremail{
+            width: 100%;
+            height: 10%;
             margin: 0px;
             padding: 0px;
             font-size: 10px;
@@ -173,7 +188,8 @@
                         <iron-icon icon="icons:exit-to-app"></iron-icon>
                     </a>
                     <img class="userpicture" src="[[user.photoURL]]" alt="[[user.displayName]]">
-                    <p class="username">[[user.email]]</p>
+                    <p class="username">[[user.displayName]]</p>
+                    <p class="useremail">[[user.email]]</p>
                 </app-toolbar>
                 <app-toolbar class="drawer-nav">
                     <a class="link" href="/home">
@@ -225,11 +241,13 @@
                     return {
                         user: {
                             type: Object,
-                            statePath: 'currentUser'
+                            statePath: 'currentUser',
+                            observer: 'userActive'
                         },
                         isLogged: {
                             type: Boolean,
-                            statePath: 'isLogged'
+                            statePath: 'isLogged',
+                            observer: 'userInactive'
                         },
                         config: {
                             type: Object,
@@ -245,6 +263,12 @@
                 }
                 static get actions() {
                     return {
+                        loginUser(user) {
+                            return {
+                                type: 'LOGIN_USER',
+                                user
+                            };
+                        },
                         logoutUser(logged) {
                             return {
                                 type: 'LOGOUT_USER',
@@ -252,10 +276,6 @@
                             };
                         }
                     };
-                }
-                connectedCallback(){
-                    super.connectedCallback();
-                    console.log(this.isLogged);
                 }
                 _routePageChanged(page) {
                     this.page = page || 'default';
@@ -271,19 +291,27 @@
                     this.page = '404';
                 }
                 logout(){
-                    firebase.initializeApp(this.firebaseConfig);
+                    console.log("logout !!!!!!");
                     firebase.auth().signOut().then(function() {
-                        console.log("user active");
-                        this.dispatch('logoutUser', false);
+                        console.log("user logout");
                     }).catch(function(error) {
-                      // An error happened.
+                        console.log("error in logout: "+error);
                     });
                 }
+                userActive(){
+                    console.log("userActive object user: "+this.user);
+                    if(this.user){
+                        this.dispatch('loginUser', this.user);
+                    } else {
+                        console.log("error in dispatch loginUser");
+                    }
+                }
                 userInactive(){
-                    if(!this.user){
+                    console.log("userInactive object user: "+this.user);
+                    if(!this.isLogged){
                         this.dispatch('logoutUser', false);
                     } else {
-                        console.log("user active");
+                        this.dispatch('loginUser', this.user);
                     }
                 }
             }
