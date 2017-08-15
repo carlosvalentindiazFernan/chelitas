@@ -1,48 +1,56 @@
 <link rel="import" href="../../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../../bower_components/polymerfire/firebase-app.html">
+<link rel="import" href="../../../bower_components/polymerfire/firebase-auth.html">
 <link rel="import" href="../../../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../../../bower_components/polymer/lib/mixins/gesture-event-listeners.html">
-
+<link rel="import" href="../../redux-mixin/redux-mixin.html">
 <!-- firebase-->
 <script src="../../../bower_components/firebase/firebase.js"></script>
-<script src="../../../bower_components/firebase/firebase-auth.js"></script>
-
+<link rel="import" href="../../profile-chelitas/profile-chelitas.html">
 
 <dom-module id="singin-chelitas">
   <template>
-    <style>
-      :host {
-        display: block;
-      }
+        <style>
+          :host {
+            display: block;
+          }
 
-      #btnfacebook{
-          background: #3F51B5;
-          color: #fff;
-      }
+          #btnfacebook{
+              background: #3F51B5;
+              color: #fff;
+          }
 
-      #btngoogle{
-          background: #F44336;
-          color: #fff;
-      }
+          #btngoogle{
+              background: #F44336;
+              color: #fff;
+          }
 
-      paper-button{
-          width: 40%;
-          margin-left: 30%;
-      }
-    </style>
-    <firebase-auth
-        id="google"
-        user="{{user}}"
-        status-known="{{statusKnown}}"
-        provider="google">
-    </firebase-auth>
-    <firebase-auth
-        id="facebook"
-        user="{{user}}"
-        status-known="{{statusKnown}}"
-        provider="facebook">
-    </firebase-auth>
-    <paper-button raised class="indigo" id="btnfacebook" on-tap="_signinFacebook">Facebook</paper-button><br><br>
-    <paper-button raised class="indigo" id="btngoogle" on-tap="_signinGoogle">Google</paper-button>
+          paper-button{
+              width: 40%;
+              margin-left: 30%;
+          }
+        </style>
+        <firebase-app
+          auth-domain="chelitas-24648.firebaseapp.com"
+          database-url="https://chelitas-24648.firebaseio.com"
+          api-key="AIzaSyDxcYm507yFlbsKtXJNQ7tDjxXf_HIJAR8"
+          storage-bucket="chelitas-24648.appspot.com"
+          messaging-sender-id="220775801818">
+        </firebase-app>
+        <firebase-auth
+                id="google"
+                user="{{user}}"
+                status-known="{{statusKnown}}"
+                provider="google">
+        </firebase-auth>
+        <firebase-auth
+                id="facebook"
+                user="{{user}}"
+                status-known="{{statusKnown}}"
+                provider="facebook">
+        </firebase-auth>
+        <paper-button raised class="indigo" id="btnfacebook" on-tap="loginFacebook">Facebook</paper-button><br><br>
+        <paper-button raised class="indigo" id="btngoogle" on-tap="loginGoogle">Google</paper-button>
   </template>
 
   <script>
@@ -56,14 +64,10 @@
 
             static get properties() {
                 return {
-                    user:{
+                    user: {
                         type: Object,
                         statePath: 'currentUser',
                         observer: 'userActive'
-                    },
-                    firebaseConfig:{
-                        type: Object,
-                        statePath: 'config'
                     }
                 };
             }
@@ -81,26 +85,28 @@
 
             connectedCallback(){
                 super.connectedCallback();
-                //firebase.initializeApp(this.firebaseConfig);
-                console.log(this.user);
             }
-            _signinGoogle(){
-                this.$.google.signInWithPopup()
-                .then(function(response) { return response })
-                .catch(function(error) { console.log(error) });
-            }
-            _signinFacebook(){
+            loginFacebook(){
                 this.$.facebook.signInWithPopup()
-                .then(function(response) { return response })
+                .then(function(response) {
+                    return response;
+                })
+                .catch(function(error) {
+                    console.log(error);
+                });
+            }
+            loginGoogle(){
+                this.$.google.signInWithPopup()
+                .then(function(response) {
+                    return response;
+                })
                 .catch(function(error) { console.log(error) });
             }
-
             userActive(){
-                console.log(this.user);
                 if(this.user){
                     this.dispatch('loginUser', this.user);
                 } else {
-                    this.user = {};
+                    console.log("error");
                 }
             }
         }
