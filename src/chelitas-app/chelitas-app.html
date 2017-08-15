@@ -1,9 +1,9 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
-<link rel="import" href="../../bower_components/polymer/lib/elements/dom-if.html">
 <link rel="import" href="../login/login-chelitas/login-chelitas.html">
 <link rel="import" href="../profile-chelitas/profile-chelitas.html">
 <link rel="import" href="../place-chelitas/place-chelitas.html">
 <script src="../../bower_components/firebase/firebase.js"></script>
+<link rel="import" href="/src/redux-mixin/redux-mixin.html">
 
 <dom-module id="chelitas-app">
   <template>
@@ -12,12 +12,13 @@
         display: block;
       }
     </style>
-    <template is="dom-if" if="[[!user]]">
+
+    <template is="dom-if" if="{{!isLogged}}">
         <login-chelitas></login-chelitas>
     </template>
-
-    <template is="dom-if" if="[[user]]">
-        <profile-chelitas user="[[user]]"></profile-chelitas>
+    
+    <template is="dom-if" if="{{isLogged}}">
+        <profile-chelitas></profile-chelitas>
     </template>
   </template>
 
@@ -29,43 +30,21 @@
      (function ChelitasAppDefinition(customElement){
          'use strict';
          class ChelitasApp extends ReduxMixin(Polymer.Element) {
-           static get is() { return 'chelitas-app'; }
-           static get properties(){
+            static get is() { return 'chelitas-app'; }
+            static get properties(){
                return{
-                   user:{
+                   user: {
                        type: Object,
-                       statePath: 'currentUser',
-                       observer: 'userActive'
+                       statePath: 'currentUser'
                    },
-                   lenguage:{
-                       type: String,
-                       statePath: 'currentLenguage'
-                   },
-                   firebaseConfig: {
-                       type: Object,
-                       statePath: 'config'
+                   isLogged: {
+                       type: Boolean,
+                       statePath: 'isLogged'
                    }
-
                };
-           }
+            }
             connectedCallback(){
                 super.connectedCallback();
-                console.log(this.user);
-            }
-            _exist(user){
-                try {
-                    JSON.parse(user);
-                    return true;
-                } catch (e) {
-                    return false;
-                }
-            }
-            userActive(){
-                if(this.user){
-                    console.log("logged");
-                } else {
-                    console.log("asdlkalskjdlk");
-                }
             }
          }
          customElements.define(ChelitasApp.is, ChelitasApp);
