@@ -15,18 +15,24 @@
     <style>
       :host {
         display: block;
+        margin: 0px;
+        padding: 0px;
+      }
+      singin-chelitas{
+          width: 100%;
+          height: 100%;
+      }
+      profile-chelitas{
+          width: 100%;
+          height: 100%;
       }
     </style>
-    <!--<app-location route={{route}}></app-location>
-    <app-route route="[[route]]" pattern="/:view" data={{routeData}}></app-route>
-    <iron-pages selected="[[routeData.view]]" attr-for-selected="view" fallback-selection="signin">-->
-        <template is="dom-if" if="{{!isLogged}}">
-            <singin-chelitas view="signin"></singin-chelitas>
-        </template>
-        <template is="dom-if" if="{{isLogged}}">
-            <profile-chelitas view="profile"></profile-chelitas>
-        </template>
-    <!--</iron-pages>-->
+    <template is="dom-if" if="{{!isLogged}}">
+        <singin-chelitas view="signin"></singin-chelitas>
+    </template>
+    <template is="dom-if" if="{{isLogged}}">
+        <profile-chelitas view="profile"></profile-chelitas>
+    </template>
   </template>
 
   <script>

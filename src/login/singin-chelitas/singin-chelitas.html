@@ -279,7 +279,12 @@
                     return response;
                 })
                 .catch(function(error) {
-                    console.log("error in login facebook");
+                    console.log(error);
+                    if(error.code == 'auth/account-exists-with-different-credential'){
+                        alert('This account is already in use.');
+                    } else {
+                        alert(error.message);
+                    }
                 });
             }
             loginGoogle(){
