@@ -55,7 +55,7 @@
         </byutv-jsonp>-->
 
         <geo-location watch-pos high-accuracy latitude="{{latitude}}" longitude="{{longitude}}"></geo-location>
-        <google-map latitude="[[latitude]]" longitude="[[longitude]]" api-key="AIzaSyDBg8FZuonLGus66T32wHKGpcCDGsQQCq0">
+        <google-map latitude="[[latitude]]" longitude="[[longitude]]" api-key="AIzaSyDBg8FZuonLGus66T32wHKGpcCDGsQQCq0" disable-deafult-ui zoom="17">
             <template is="dom-repeat" items="[[response]]">
                 <google-map-marker slot="markers" latitude="[[response.geometry.lat]]" longitude="[[response.geometry.lng]]" title="[[response.name]]"></google-map-marker>
             </template>
