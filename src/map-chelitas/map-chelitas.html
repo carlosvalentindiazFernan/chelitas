@@ -7,20 +7,24 @@
 
     <style>
       google-map {
-        height: 700px; 
-        width: 100%; 
-        position:absolute; 
-        top: 0; 
-        left: 0; 
-        z-index: 0; 
+        height: 700px;
+        width: 100%;
+        position:absolute;
+        top: 0;
+        left: 0;
+        z-index: 0;
       }
     </style>
 
-    <google-map latitude="37.77493" longitude="-122.41942" ></google-map>
+    <google-map id="map" fit-to-marker api-key="AIzaSyDBg8FZuonLGus66T32wHKGpcCDGsQQCq0" zoom="15">
+      <google-map-marker
+            latitude="37.78"
+            longitude="-122.4"
+            draggable="false"
+            title="you stay here">
+        </google-map-marker>
+    </google-map>
 
-
-
-    
     <placeholder-chelitas></placeholder-chelitas>
 
   </template>
