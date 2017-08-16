@@ -258,7 +258,7 @@
                 static get observers() {
                     return [
                         '_routePageChanged(routeData.view)',
-                        '_pageChanged(routeData.view)'
+                        '_pageChanged(routeData.view)',
                     ];
                 }
                 static get actions() {
@@ -291,7 +291,6 @@
                     this.page = '404';
                 }
                 logout(){
-                    console.log("logout !!!!!!");
                     firebase.auth().signOut().then(function() {
                         console.log("user logout");
                     }).catch(function(error) {
@@ -303,7 +302,7 @@
                     if(this.user){
                         this.dispatch('loginUser', this.user);
                     } else {
-                        console.log("error in dispatch loginUser");
+                        this.dispatch('logoutUser', false);
                     }
                 }
                 userInactive(){

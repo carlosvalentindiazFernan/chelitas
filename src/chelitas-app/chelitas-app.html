@@ -1,4 +1,9 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<!--ROUTE-->
+<link rel="import" href="../../bower_components/app-route/app-location.html">
+<link rel="import" href="../../bower_components/app-route/app-route.html">
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+<!--CUSTOM-->
 <link rel="import" href="../login/singin-chelitas/singin-chelitas.html">
 <link rel="import" href="../profile-chelitas/profile-chelitas.html">
 <link rel="import" href="../place-chelitas/place-chelitas.html">
@@ -12,12 +17,16 @@
         display: block;
       }
     </style>
-    <template is="dom-if" if="{{!isLogged}}">
-        <singin-chelitas></singin-chelitas>
-    </template>
-    <template is="dom-if" if="{{isLogged}}">
-        <profile-chelitas></profile-chelitas>
-    </template>
+    <!--<app-location route={{route}}></app-location>
+    <app-route route="[[route]]" pattern="/:view" data={{routeData}}></app-route>
+    <iron-pages selected="[[routeData.view]]" attr-for-selected="view" fallback-selection="signin">-->
+        <template is="dom-if" if="{{!isLogged}}">
+            <singin-chelitas view="signin"></singin-chelitas>
+        </template>
+        <template is="dom-if" if="{{isLogged}}">
+            <profile-chelitas view="profile"></profile-chelitas>
+        </template>
+    <!--</iron-pages>-->
   </template>
 
   <script>
@@ -65,6 +74,7 @@
                     this.dispatch('loginUser', this.user);
                 } else {
                     console.log("error in dispatch loginUser");
+                    this.dispatch('logoutUser', false);
                 }
             }
             userInactive(){
