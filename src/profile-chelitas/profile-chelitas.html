@@ -187,7 +187,7 @@
                     <a class="icon-logout" on-click="logout">
                         <iron-icon icon="icons:exit-to-app"></iron-icon>
                     </a>
-                    <img class="userpicture" src="[[user.photoURL]]" alt="[[user.displayName]]">
+                    <img class="userpicture" src="[[image]]" alt="[[user.displayName]]">
                     <p class="username">[[user.displayName]]</p>
                     <p class="useremail">[[user.email]]</p>
                 </app-toolbar>
@@ -252,6 +252,9 @@
                         config: {
                             type: Object,
                             statePath: 'config'
+                        },
+                        image:{
+                            computed: '_img(user.photoURL)'
                         }
                     };
                 }
@@ -276,6 +279,13 @@
                             };
                         }
                     };
+                }
+                _img(img){
+                    if(this.user.photoURL == null || this.photoURL == 'undefined'){
+                        return 'http://s3.amazonaws.com/37assets/svn/765-default-avatar.png';
+                    } else {
+                        return this.user.photoURL;
+                    }
                 }
                 _routePageChanged(page) {
                     this.page = page || 'default';
