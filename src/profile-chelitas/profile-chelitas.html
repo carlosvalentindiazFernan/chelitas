@@ -255,7 +255,20 @@
                         },
                         image:{
                             computed: '_img(user.photoURL)'
-                        }
+                        },
+                        location:{
+                            type: String,
+                            statePath: 'location',
+                            observer: 'userLocation'
+                        },
+                        latitude:{
+                            type: String,
+                            statePath: 'latitud'
+                        },
+                        longitude: {
+                            type: String,
+                            statePath: 'longitud'
+                        },
                     };
                 }
                 static get observers() {
@@ -277,8 +290,18 @@
                                 type: 'LOGOUT_USER',
                                 logged
                             };
+                        },
+                        geoLocation(location) {
+                            return {
+                                type: 'GEO_LOCATION',
+                                location
+                            };
                         }
                     };
+                }
+                getLocation(){
+                    let location = this.latitude+","+this.longitude;
+                    return location;
                 }
                 _img(img){
                     if(this.user.photoURL == null || this.photoURL == 'undefined'){
@@ -321,6 +344,17 @@
                         this.dispatch('logoutUser', false);
                     } else {
                         this.dispatch('loginUser', this.user);
+                    }
+                }
+                userLocation(){
+                    let location = {
+                        latitud: this.latitude,
+                        longitud: this.longitude
+                    };
+                    if(this.latitude!=null && this.longitude!=null){
+                        this.dispatch('geoLocation', this.location);
+                    } else {
+                        //this.dispatch('loginUser', this.user);
                     }
                 }
             }

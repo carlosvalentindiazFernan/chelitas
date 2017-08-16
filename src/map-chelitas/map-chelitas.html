@@ -2,9 +2,11 @@
 <link rel="import" href="../../bower_components/google-map/google-map.html">
 <link rel="import" href="../placeholder-chelitas/placeholder-chelitas.html">
 <link rel="import" href="../../bower_components/geo-location/geo-location.html">
+<link rel="import" href="../../bower_components/byutv-jsonp/byutv-jsonp.html">
 <link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="../../bower_components/google-map/google-map-marker.html">
 <link rel="import" href="../../bower_components/promise-polyfill/promise-polyfill-lite.html">
+<link rel="import" href="../redux-mixin/redux-mixin.html">
 <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDksNVtDMLV9M0-Ut2uvEwJQ7JlW__8ZEA&libraries=places">
 </script>
@@ -20,22 +22,37 @@
                 left: 0;
                 z-index: 0;
             }
+            span{
+                z-index: 100;
+            }
         </style>
         <iron-ajax
             auto
-            url="https://maps.googleapis.com/maps/api/place/nearbysearch/jsonp/"
+            url="https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyDSlsEzqyE-9lKkYzoVWEBJqgnOfVn1tVY"
             params='{
                "location" : "[[location]]",
                "radius" : "500",
-               "types" : "bar",
-               "key" : "AIzaSyC8Hv67MnSMEUvRE4b0foA6i7kUKkH9f80"
+               "types" : "bar"
             }'
             handle-as="json"
             contentType="application/json"
             on-response="handleResponse"
             last-response="{{response}}">
         </iron-ajax>
-
+        <!--<byutv-jsonp
+            auto
+            url="https://maps.googleapis.com/maps/api/place/nearbysearch/jsonp/"
+            params='{
+               "location" : "[[location]]",
+               "radius" : "1000",
+               "types" : "bar",
+               "key" : "AIzaSyDSlsEzqyE-9lKkYzoVWEBJqgnOfVn1tVY"
+            }'
+            handle-as="jsonp"
+            contentType="application/json"
+            on-response="handleResponse"
+            last-response="{{response}}">
+        </byutv-jsonp>-->
 
         <geo-location watch-pos high-accuracy latitude="{{latitude}}" longitude="{{longitude}}"></geo-location>
         <google-map latitude="[[latitude]]" longitude="[[longitude]]" api-key="AIzaSyDBg8FZuonLGus66T32wHKGpcCDGsQQCq0">
@@ -49,7 +66,7 @@
   (function Map(){
         'use strict';
 
-        class MapChelitas extends Polymer.Element {
+        class MapChelitas extends ReduxMixin(Polymer.Element) {
 
           static get is() { return 'map-chelitas'; }
 
@@ -57,20 +74,33 @@
               return {
                   location:{
                       type: String,
-                      computed: 'getLocation(latitude,longitude)'
+                      statePath: 'location',
+                      observer: 'userLocation'
                   },
                   latitude:{
                       type: String,
-                      //observer: "_changeLatitude"
+                      statePath: 'latitud'
                   },
                   longitude: {
                       type: String,
-                      //observer: "_changeLongitude"
+                      statePath: 'longitud'
                   },
                   response: {
                       type: String
                   }
               };
+          }
+          static get actions(){
+              return{
+                  geoLocation(location) {
+                      return {
+                          type: 'GEO_LOCATION',
+                          location
+                      };
+                  }
+              };
+          }
+          connectedCallback(){
           }
           handleResponse(){
               console.log("handleResponse");
@@ -78,6 +108,20 @@
           getLocation(){
               let location = this.latitude+","+this.longitude;
               return location;
+          }
+          userLocation(){
+              let location = {
+                  latitud: this.latitude,
+                  longitud: this.longitude
+              };
+              if(this.latitude!=null && this.longitude!=null){
+                  this.dispatch('geoLocation', this.location);
+              } else {
+                  //this.dispatch('loginUser', this.user);
+              }
+          }
+          _loc(){
+              return this.latitude+','+this.longitude;
           }
 
         }
