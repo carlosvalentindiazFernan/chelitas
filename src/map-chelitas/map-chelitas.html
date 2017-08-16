@@ -1,37 +1,89 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../../bower_components/google-map/google-map.html">
 <link rel="import" href="../placeholder-chelitas/placeholder-chelitas.html">
+<link rel="import" href="../../bower_components/geo-location/geo-location.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="../../bower_components/google-map/google-map-marker.html">
+<link rel="import" href="../../bower_components/promise-polyfill/promise-polyfill-lite.html">
 <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDksNVtDMLV9M0-Ut2uvEwJQ7JlW__8ZEA&libraries=places">
 </script>
 
 <dom-module id="map-chelitas">
-  <template>
-    <style>
-      google-map {
-        height: 700px;
-        width: 100%;
-        position:absolute;
-        top: 0;
-        left: 0;
-        z-index: 0;
-      }
-    </style>
+    <template>
+        <style>
+            google-map {
+                height: 500px;
+                width: 100%;
+                position:absolute;
+                top: 0;
+                left: 0;
+                z-index: 0;
+            }
+        </style>
+        <iron-ajax
+            auto
+            url="https://maps.googleapis.com/maps/api/place/nearbysearch/jsonp/"
+            params='{
+               "location" : "[[location]]",
+               "radius" : "500",
+               "types" : "bar",
+               "key" : "AIzaSyC8Hv67MnSMEUvRE4b0foA6i7kUKkH9f80"
+            }'
+            handle-as="json"
+            contentType="application/json"
+            on-response="handleResponse"
+            last-response="{{response}}">
+        </iron-ajax>
 
-    <google-map id="map" fit-to-marker api-key="AIzaSyDBg8FZuonLGus66T32wHKGpcCDGsQQCq0" zoom="15">
-      <google-map-marker
-            latitude="37.78"
-            longitude="-122.4"
-            draggable="false"
-            title="you stay here">
-        </google-map-marker>
-    </google-map>
 
-    <placeholder-chelitas></placeholder-chelitas>
+        <geo-location watch-pos high-accuracy latitude="{{latitude}}" longitude="{{longitude}}"></geo-location>
+        <google-map latitude="[[latitude]]" longitude="[[longitude]]" api-key="AIzaSyDBg8FZuonLGus66T32wHKGpcCDGsQQCq0">
+            <template is="dom-repeat" items="[[response]]">
+                <google-map-marker slot="markers" latitude="[[response.geometry.lat]]" longitude="[[response.geometry.lng]]" title="[[response.name]]"></google-map-marker>
+            </template>
+            <google-map-marker slot="markers" latitude="[[latitude]]" longitude="[[longitude]]" title="You stay here"></google-map-marker>
+        </google-map>
+    </template>
+  <script>
+  (function Map(){
+        'use strict';
 
-  </template>
+        class MapChelitas extends Polymer.Element {
+
+          static get is() { return 'map-chelitas'; }
+
+          static properties(){
+              return {
+                  location:{
+                      type: String,
+                      computed: 'getLocation(latitude,longitude)'
+                  },
+                  latitude:{
+                      type: String,
+                      //observer: "_changeLatitude"
+                  },
+                  longitude: {
+                      type: String,
+                      //observer: "_changeLongitude"
+                  },
+                  response: {
+                      type: String
+                  }
+              };
+          }
+          handleResponse(){
+              console.log("handleResponse");
+          }
+          getLocation(){
+              let location = this.latitude+","+this.longitude;
+              return location;
+          }
+
+        }
+
+        window.customElements.define(MapChelitas.is, MapChelitas);
+    })();
+  </script>
 
 </dom-module>
-
-<script src="map.js"></script>

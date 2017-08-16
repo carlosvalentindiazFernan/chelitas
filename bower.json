@@ -17,7 +17,9 @@
     "paper-icon-button": "PolymerElements/paper-icon-button#^2.0.0",
     "polymerfire": "^2.1.0",
     "iron-ajax": "PolymerElements/iron-ajax#^2.0.5",
-    "paper-input-place": "mlisook/paper-input-place#^1.9.4"
+    "paper-input-place": "mlisook/paper-input-place#^1.9.4",
+    "geo-location": "^2.0.1",
+    "promise-polyfill": "PolymerLabs/promise-polyfill#2"
   },
   "devDependencies": {
     "web-component-tester": "Polymer/web-component-tester#^6.0.0",
