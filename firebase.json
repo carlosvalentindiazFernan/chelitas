@@ -4,6 +4,17 @@
   },
   "hosting": {
     "public": "build/default/",
+
+    "headers": [ {
+      "source" : "/index.html",
+      
+      "headers" : [ {
+        "key" : "Access-Control-Allow-Origin",
+        "value" : "*"
+      } ]
+
+    } ],    
+
     "rewrites": [
       {
         "source": "!/__/**",
