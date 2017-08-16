@@ -1,5 +1,6 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-request.html">
 
 <dom-module id="placeholder-chelitas">
   <template>
@@ -7,23 +8,36 @@
       :host {
         display: block;
       }
+      p{
+          margin-top: 30px;
+      }
     </style>
+ 
 
-    <iron-ajax
-        auto
-        url="https://maps.googleapis.com/maps/api/place/nearbysearch/json"
-        params='{"location":"-33.8670522,151.1957362", "rankby":"distance","types":"food", "key": "AIzaSyDksNVtDMLV9M0-Ut2uvEwJQ7JlW__8ZEA", "type": "video"}'
+
+    <iron-ajax auto url="https://maps.googleapis.com/maps/api/place/nearbysearch/json"
+        params='{
+                "location":"-33.8670522,151.1957362",
+                "radius":"500", 
+                "key": "AIzaSyDLOJL2rZYDRy5oCEbaPgCtTNcLZH8Do08", 
+                "types": "bar"
+        }'            
         handle-as="json"
         on-response="handleResponse"
         debounce-duration="300"></iron-ajax>
 
-  </template>
+    </template>
 
   <script>
     (function placeholder(){
         'use strict';
         class PlaceholderChelitas extends Polymer.Element {
             static get is() { return 'placeholder-chelitas'; }
+            
+
+            handleResponse(e) {
+                console.log(e.detail.response);
+            }
         }
         window.customElements.define(PlaceholderChelitas.is, PlaceholderChelitas);
     })();
