@@ -17,6 +17,7 @@
 <link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
 <!--FIREBASE-->
 <script src="../../bower_components/firebase/firebase.js"></script>
+<link rel="import" href="../redux-mixin/redux-mixin.html">
 <!--PAGES-->
 <link rel="import" href="../home-page/home-page.html">
 <link rel="import" href="../place-chelitas/place-chelitas.html">
@@ -63,15 +64,30 @@
             background-color: #F4810A;
         }
         .userpicture{
-            width: calc(45% - 6px);
-            height: calc(45% - 6px);
+            width: calc(65% - 6px);
+            height: calc(55% - 6px);
             border: 3px solid #1e1b1b;
             border-radius: 50%;
             background-color: #EBEBEB;
         }
         .username{
             width: 100%;
-            height: 20%;
+            height: 10%;
+            margin: 0px;
+            margin-top: 10px;
+            padding: 0px;
+            font-size: 10px;
+            font-family: sans-serif;
+            font-weight: bold;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-transform: uppercase;
+        }
+        .useremail{
+            width: 100%;
+            height: 10%;
             margin: 0px;
             padding: 0px;
             font-size: 10px;
@@ -168,11 +184,12 @@
                     <a class="icon-settings" href="/settings">
                         <iron-icon icon="icons:settings"></iron-icon>
                     </a>
-                    <a class="icon-logout" href="/logout">
+                    <a class="icon-logout" on-click="logout">
                         <iron-icon icon="icons:exit-to-app"></iron-icon>
                     </a>
                     <img class="userpicture" src="[[user.photoURL]]" alt="[[user.displayName]]">
-                    <p class="username">[[user.email]]</p>
+                    <p class="username">[[user.displayName]]</p>
+                    <p class="useremail">[[user.email]]</p>
                 </app-toolbar>
                 <app-toolbar class="drawer-nav">
                     <a class="link" href="/home">
@@ -217,15 +234,22 @@
     </template>
     <script>
         (function profileChelitasDefinition(customElements){
+            'use strict';
             class ProfileChelitas extends ReduxMixin(Polymer.Element) {
                 static get is(){ return 'profile-chelitas'; }
                 static get properties() {
                     return {
-                        user:{
+                        user: {
                             type: Object,
                             statePath: 'currentUser',
+                            observer: 'userActive'
                         },
-                        firebaseConfig:{
+                        isLogged: {
+                            type: Boolean,
+                            statePath: 'isLogged',
+                            observer: 'userInactive'
+                        },
+                        config: {
                             type: Object,
                             statePath: 'config'
                         }
@@ -235,7 +259,6 @@
                     return [
                         '_routePageChanged(routeData.view)',
                         '_pageChanged(routeData.view)',
-                        'userActive(user)'
                     ];
                 }
                 static get actions() {
@@ -245,11 +268,14 @@
                                 type: 'LOGIN_USER',
                                 user
                             };
+                        },
+                        logoutUser(logged) {
+                            return {
+                                type: 'LOGOUT_USER',
+                                logged
+                            };
                         }
                     };
-                }
-                connectedCallback(){
-                    super.connectedCallback();
                 }
                 _routePageChanged(page) {
                     this.page = page || 'default';
@@ -263,6 +289,29 @@
                 }
                 _showPage404(page) {
                     this.page = '404';
+                }
+                logout(){
+                    firebase.auth().signOut().then(function() {
+                        console.log("user logout");
+                    }).catch(function(error) {
+                        console.log("error in logout: "+error);
+                    });
+                }
+                userActive(){
+                    console.log("userActive object user: "+this.user);
+                    if(this.user){
+                        this.dispatch('loginUser', this.user);
+                    } else {
+                        this.dispatch('logoutUser', false);
+                    }
+                }
+                userInactive(){
+                    console.log("userInactive object user: "+this.user);
+                    if(!this.isLogged){
+                        this.dispatch('logoutUser', false);
+                    } else {
+                        this.dispatch('loginUser', this.user);
+                    }
                 }
             }
             customElements.define(ProfileChelitas.is, ProfileChelitas);

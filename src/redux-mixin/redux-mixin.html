@@ -1,14 +1,6 @@
 <link rel="import" href="../../bower_components/polymer-redux/polymer-redux.html">
 <script>
     const initialState = {
-        config:{
-            apiKey: "AIzaSyDxcYm507yFlbsKtXJNQ7tDjxXf_HIJAR8",
-            authDomain: "chelitas-24648.firebaseapp.com",
-            databaseURL: "https://chelitas-24648.firebaseio.com",
-            projectId: "chelitas-24648",
-            storageBucket: "chelitas-24648.appspot.com",
-            messagingSenderId: "220775801818"
-        },
         languages: [{
             name: 'english',
             key: 'en'
@@ -17,25 +9,37 @@
             key: 'es'
         }],
         currentLenguage: 'en',//Lenguaje seleccionado para internacionalizacion por default español
-        loginMethod: '',
         currentUser: {},//Usuario loggeado
+        isLogged: false,
         users: [],//Usuarios registrados en la app
         places: []//Places que se llenaran al momento de consultar google places
     }
 
     function users(state = initialState, action){
+        console.log(action.user);
         switch (action.type) {
             case "LOGIN_USER": {
-                console.log(action.user);
                 return Object.assign({}, state, {
                     config: state.config,
                     languages: state.languages,
                     currentLenguage: state.currentLenguage,
-                    loginMethod: state.loginMethod,
                     currentUser: action.user,
+                    isLogged: true,
                     users: state.users,
                     places: state.places
                 });
+            }
+            case "LOGOUT_USER": {
+                return Object.assign({}, state, {
+                    config: state.config,
+                    languages: state.languages,
+                    currentLenguage: state.currentLenguage,
+                    currentUser: state.user,
+                    isLogged: action.logged,
+                    users: state.users,
+                    places: state.places
+                });
+                location.reload();
             }
             default: {
                 return state;
