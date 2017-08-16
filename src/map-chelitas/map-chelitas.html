@@ -2,6 +2,9 @@
 <link rel="import" href="../../bower_components/google-map/google-map.html">
 <link rel="import" href="../placeholder-chelitas/placeholder-chelitas.html">
 <link rel="import" href="../../bower_components/google-map/google-map-marker.html">
+<script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDksNVtDMLV9M0-Ut2uvEwJQ7JlW__8ZEA&libraries=places">
+</script>
 
 <dom-module id="map-chelitas">
   <template>
@@ -21,49 +24,8 @@
         title="you stay here"></google-map-marker>
     </google-map>
 
-    <script>
-
-
-    /* Geolocation */
-
-
-
-    </script>
-
   </template>
 
-  <script>
-    (function Map(){
-        'use strict';
-
-        class GeolocalizationCords{
-
-
-          getLocation() {
-            if (navigator.geolocation) {
-              navigator.geolocation.watchPosition(this.showPosition);
-            } else {
-              console.log("Geolocation is not supported by this browser.")
-            }
-          }
-
-          showPosition(position) {
-            let map =document.getElementById('map');
-          }
-        }
-
-        let geo = new GeolocalizationCords
-        window.onload = geo.getLocation();
-
-
-        class MapChelitas extends Polymer.Element {
-            static get is() { return 'map-chelitas'; }
-
-        }
-
-        window.customElements.define(MapChelitas.is, MapChelitas);
-    })();
-
-
-  </script>
 </dom-module>
+
+<script src="map.js"></script>
