@@ -3,6 +3,13 @@
     "rules": "database.rules.json"
   },
   "hosting": {
+      "headers": [ {
+        "source" : "**/*.@(eot|otf|ttf|ttc|woff|font.css)",
+          "headers" : [ {
+              "key" : "Access-Control-Allow-Origin",
+              "value" : "*"
+          } ]
+      } ],
     "public": "build/default/",
     "rewrites": [
       {
