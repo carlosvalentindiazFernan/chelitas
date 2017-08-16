@@ -39,21 +39,6 @@
             on-response="handleResponse"
             last-response="{{response}}">
         </iron-ajax>
-        <!--<byutv-jsonp
-            auto
-            url="https://maps.googleapis.com/maps/api/place/nearbysearch/jsonp/"
-            params='{
-               "location" : "[[location]]",
-               "radius" : "1000",
-               "types" : "bar",
-               "key" : "AIzaSyDSlsEzqyE-9lKkYzoVWEBJqgnOfVn1tVY"
-            }'
-            handle-as="jsonp"
-            contentType="application/json"
-            on-response="handleResponse"
-            last-response="{{response}}">
-        </byutv-jsonp>-->
-
         <geo-location watch-pos high-accuracy latitude="{{latitude}}" longitude="{{longitude}}"></geo-location>
         <google-map latitude="[[latitude]]" longitude="[[longitude]]" api-key="AIzaSyDBg8FZuonLGus66T32wHKGpcCDGsQQCq0" disable-deafult-ui zoom="17">
             <template is="dom-repeat" items="[[response]]">
