@@ -1,10 +1,37 @@
 (function Map(){
       'use strict';
 
-      class GeolocalizationCords{
+
+
+      class MapChelitas extends Polymer.Element {
+
+          static get is() { return 'map-chelitas'; }
+
+          static properties(){
+            return {
+
+              latitude:{
+                type: String,
+                computed: "_changelatitude"
+              },
+
+              longitude: {
+                type: String,
+                computed: "_changelongitude"
+              }
+
+            };
+          }
+
+          ready(){
+            super.ready();
+            window.onload = this.getLocation();
+
+          }
 
 
         getLocation() {
+          console.log("foca1")
           if (navigator.geolocation) {
             navigator.geolocation.watchPosition(this.showPosition);
           } else {
@@ -13,25 +40,11 @@
         }
 
         showPosition(position) {
-          let map =document.getElementById('map');
+          console.log(position)
+          this.latitude = position.coords.latitude;
+          this.longitude = position.coords.longitude;
         }
-      }
 
-      let geo = new GeolocalizationCords
-      window.onload = geo.getLocation();
-
-
-      class MapChelitas extends Polymer.Element {
-          static get is() { return 'map-chelitas'; }
-          ready(){
-            super.ready();
-            console.log("ready")
-
-            let script = document.createElement('script');
-            script.type = 'text/javascript';
-            script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyDksNVtDMLV9M0-Ut2uvEwJQ7JlW__8ZEA&libraries=places&callback=initMap';
-            document.body.appendChild(script);
-          }
 
       }
 
