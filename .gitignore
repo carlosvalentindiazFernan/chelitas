@@ -1,5 +1,3 @@
-bower_components
-node_modules
-public
-.DS_Store
-build
+bower_components/
+build/
+node_modules/

@@ -1,27 +1,15 @@
 {
-  "name": "chelitas",
-  "version": "1.0.0",
-  "description": "## Viewing Your Application",
-  "main": "index.js",
-  "directories": {
-    "test": "test"
+  "name": "polymer-starter-kit",
+  "license": "BSD-3-Clause",
+  "devDependencies": {
+    "eslint": "^3.19.0",
+    "eslint-config-google": "^0.7.0",
+    "eslint-plugin-html": "^2.0.0"
   },
-  "dependencies": {
-    "redux": "^3.7.2"
-  },
-  "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/carlosvalentindiazFernan/chelitas.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/carlosvalentindiazFernan/chelitas/issues"
-  },
-  "homepage": "https://github.com/carlosvalentindiazFernan/chelitas#readme"
+    "lint": "npm run lint:javascript && polymer lint",
+    "lint:javascript": "eslint . --ext js,html --ignore-path .gitignore",
+    "test": "polymer test",
+    "test:integration": "polymer build # test that psk builds without error with the CLI"
+  }
 }
